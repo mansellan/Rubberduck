@@ -1,4 +1,5 @@
 using System;
+using Rubberduck.Resources;
 using Rubberduck.VBEditor.SourceCodeHandling;
 
 namespace Rubberduck.VBEditor.SafeComWrappers.Abstract

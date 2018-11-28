@@ -22,19 +22,19 @@ namespace Rubberduck.VBEditor.SafeComWrappers.VBA
         public AddIn(VB.AddIn target, bool rewrapping = false) 
             : base(target, rewrapping)
         {
-            CommandBarLocations = new ReadOnlyDictionary<CommandBarSite, CommandBarLocation>(new Dictionary<CommandBarSite, CommandBarLocation>
+            MenuBarLocations = new ReadOnlyDictionary<KnownMenuBar, CommandBarLocation>(new Dictionary<KnownMenuBar, CommandBarLocation>
             {
-                {CommandBarSite.MenuBar, new CommandBarLocation(MenuBar, WindowMenu)},
-                {CommandBarSite.CodeWindow, new CommandBarLocation(CodeWindow, ListProperties)},
-                {CommandBarSite.ProjectExplorer, new CommandBarLocation(ProjectExplorer, ProjectProperties)},
-                {CommandBarSite.MsForm, new CommandBarLocation(MsForm, ViewCode)},
-                {CommandBarSite.MsFormControl, new CommandBarLocation(MsFormControl, ViewCode)}
+                {VBEditor.KnownMenuBar.Main, new CommandBarLocation(MenuBar, WindowMenu)},
+                {VBEditor.KnownMenuBar.CodeWindow, new CommandBarLocation(CodeWindow, ListProperties)},
+                {VBEditor.KnownMenuBar.ProjectExplorer, new CommandBarLocation(ProjectExplorer, ProjectProperties)},
+                {VBEditor.KnownMenuBar.MsForm, new CommandBarLocation(MsForm, ViewCode)},
+                {VBEditor.KnownMenuBar.MsFormControl, new CommandBarLocation(MsFormControl, ViewCode)}
             });
 
         }
 
 
-        public IReadOnlyDictionary<CommandBarSite, CommandBarLocation> CommandBarLocations { get; }
+        public IReadOnlyDictionary<KnownMenuBar, CommandBarLocation> MenuBarLocations { get; }
 
         public string ProgId => IsWrappingNullReference ? string.Empty : Target.ProgId;
 

@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Media.Imaging;
 using Rubberduck.Navigation.Folders;
 using Rubberduck.Parsing.Symbols;
+using Rubberduck.Resources;
 using Rubberduck.VBEditor;
 using Rubberduck.VBEditor.SafeComWrappers;
 using Rubberduck.VBEditor.SafeComWrappers.Abstract;

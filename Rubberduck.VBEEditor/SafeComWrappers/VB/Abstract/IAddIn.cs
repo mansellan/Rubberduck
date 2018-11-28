@@ -13,6 +13,6 @@ namespace Rubberduck.VBEditor.SafeComWrappers.Abstract
 
         IVBE VBE { get; }
         IAddIns Collection { get; }
-        IReadOnlyDictionary<CommandBarSite, CommandBarLocation> CommandBarLocations { get; }
+        IReadOnlyDictionary<KnownMenuBar, CommandBarLocation> MenuBarLocations { get; }
     }
 }

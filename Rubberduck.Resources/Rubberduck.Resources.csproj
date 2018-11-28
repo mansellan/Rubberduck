@@ -149,6 +149,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="MenuBarIds.cs" />
     <Compile Include="Menus\RubberduckMenus.cs.Designer.cs">
       <DependentUpon>RubberduckMenus.cs.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -338,6 +339,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="VbeKind.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="About\AboutUI.cs.resx">

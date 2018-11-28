@@ -258,9 +258,19 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Reactive, Version=4.1.0.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reactive.4.1.2\lib\net46\System.Reactive.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.0\lib\netstandard1.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.1\lib\portable-net45+win8+wp8+wpa81\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.4.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
@@ -274,7 +284,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
-    <Compile Include="AppMenu.cs" />
     <Compile Include="AutoComplete\AutoCompleteBlockBase.cs" />
     <Compile Include="AutoComplete\AutoCompleteDoBlock.cs" />
     <Compile Include="AutoComplete\AutoCompleteEnumBlock.cs" />
@@ -328,6 +337,7 @@
     <Compile Include="Navigation\CodeExplorer\ICodeExplorerDeclarationViewModel.cs" />
     <Compile Include="CodeAnalysis\CodeMetrics\ICodeMetricsAnalyst.cs" />
     <Compile Include="Navigation\Folders\FolderHelper.cs" />
+    <Compile Include="Properties\Annotations1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -382,6 +392,69 @@
     <Compile Include="AutoComplete\AutoCompleteClosingParenthese.cs" />
     <Compile Include="AutoComplete\AutoCompleteClosingString.cs" />
     <Compile Include="AutoComplete\AutoCompleteService.cs" />
+    <Compile Include="UI\Bars\Framework\BarItemAvailability.cs" />
+    <Compile Include="UI\Bars\Framework\Bar.cs" />
+    <Compile Include="UI\Bars\Framework\BarItem.cs" />
+    <Compile Include="UI\Bars\Framework\BarItemFactory.cs" />
+    <Compile Include="UI\Bars\Framework\CommandBarItem.cs" />
+    <Compile Include="UI\Bars\Framework\IMenuBarFactory.cs" />
+    <Compile Include="UI\Bars\MenuBars\ProjectExplorerContextMenuBar.cs" />
+    <Compile Include="UI\Bars\MenuBars\FormDesignerContextMenuBar.cs" />
+    <Compile Include="UI\Bars\MenuBars\CodePaneContextMenuBar.cs" />
+    <Compile Include="UI\Bars\MenuBars\RefactorMenuBar.cs" />
+    <Compile Include="UI\Bars\MenuBars\NavigateMenuBar.cs" />
+    <Compile Include="UI\Bars\MenuBars\ToolsMenuBar.cs" />
+    <Compile Include="UI\Bars\MenuBars\IndentMenuBar.cs" />
+    <Compile Include="UI\Bars\RubberduckBars.cs" />
+    <Compile Include="UI\Bars\Framework\ToolBar.cs" />
+    <Compile Include="UI\Bars\Framework\MenuBar.cs" />
+    <Compile Include="UI\Bars\MenuBars\RubberduckMenuBar.cs" />
+    <Compile Include="UI\Bars\MenuBars\UnitTestsMenuBar.cs" />
+    <Compile Include="UI\Bars\Framework\SelectableBarItem.cs" />
+    <Compile Include="UI\Bars\Framework\SeparatorBarItem.cs" />
+    <Compile Include="UI\Bars\Framework\VbeMenuBar.cs" />
+    <Compile Include="UI\Bars\Framework\VbeToolBar.cs" />
+    <Compile Include="UI\Bars\Framework\VbeBars.cs" />
+    <Compile Include="UI\Command\AboutCommand.cs" />
+    <Compile Include="UI\Command\CodeExplorerCommand.cs" />
+    <Compile Include="UI\Command\CodeMetricsCommand.cs" />
+    <Compile Include="UI\Command\CommandBase.cs" />
+    <Compile Include="UI\Command\DelegateCommand.cs" />
+    <Compile Include="UI\Command\ExportAllCommand.cs" />
+    <Compile Include="UI\Command\FindAllImplementationsCommand.cs" />
+    <Compile Include="UI\Command\FindAllReferencesCommand.cs" />
+    <Compile Include="UI\Command\FindSymbolCommand.cs" />
+    <Compile Include="UI\Command\FormDesignerFindAllReferencesCommand.cs" />
+    <Compile Include="UI\Command\IndentCurrentModuleCommand.cs" />
+    <Compile Include="UI\Command\IndentCurrentProcedureCommand.cs" />
+    <Compile Include="UI\Command\IndentCurrentProjectCommand.cs" />
+    <Compile Include="UI\Command\InspectionResultsCommand.cs" />
+    <Compile Include="UI\Command\NavigateCommand.cs" />
+    <Compile Include="UI\Command\NoIndentAnnotationCommand.cs" />
+    <Compile Include="UI\Command\Refactorings\CodePaneRefactorRenameCommand.cs" />
+    <Compile Include="UI\Command\Refactorings\FormDesignerRefactorRenameCommand.cs" />
+    <Compile Include="UI\Command\Refactorings\ProjectExplorerRefactorRenameCommand.cs" />
+    <Compile Include="UI\Command\Refactorings\RefactorCommandBase.cs" />
+    <Compile Include="UI\Command\Refactorings\RefactorEncapsulateFieldCommand.cs" />
+    <Compile Include="UI\Command\Refactorings\RefactorExtractInterfaceCommand.cs" />
+    <Compile Include="UI\Command\Refactorings\RefactorExtractMethodCommand.cs" />
+    <Compile Include="UI\Command\Refactorings\RefactorImplementInterfaceCommand.cs" />
+    <Compile Include="UI\Command\Refactorings\RefactorIntroduceFieldCommand.cs" />
+    <Compile Include="UI\Command\Refactorings\RefactorIntroduceParameterCommand.cs" />
+    <Compile Include="UI\Command\Refactorings\RefactorMoveCloserToUsageCommand.cs" />
+    <Compile Include="UI\Command\Refactorings\RefactorRemoveParametersCommand.cs" />
+    <Compile Include="UI\Command\Refactorings\RefactorReorderParametersCommand.cs" />
+    <Compile Include="UI\Command\RefreshCommand .cs" />
+    <Compile Include="UI\Command\RegexAssistantCommand.cs" />
+    <Compile Include="UI\Command\RegexSearchReplaceCommand.cs" />
+    <Compile Include="UI\Command\ReparseCommand.cs" />
+    <Compile Include="UI\Command\RunAllTestsCommand.cs" />
+    <Compile Include="UI\Command\SettingsCommand.cs" />
+    <Compile Include="UI\Command\ShowParserErrorsCommand.cs" />
+    <Compile Include="UI\Command\SyntaxErrorExtensions.cs" />
+    <Compile Include="UI\Command\TestExplorerCommand.cs" />
+    <Compile Include="UI\Command\ToDoExplorerCommand.cs" />
+    <Compile Include="UI\Command\VersionCheckCommand.cs" />
     <Compile Include="UI\Settings\Converters\EmptyLineHandlingToTextConverter.cs" />
     <Compile Include="UI\Settings\Converters\EmptyLineHandlingValueTextToEnumValueConverter.cs" />
     <Compile Include="UI\Settings\Converters\EnumToBooleanConverter.cs" />
@@ -401,15 +474,12 @@
       <DependentUpon>CodeMetricsWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\CodeMetrics\CodeMetricsDockablePresenter.cs" />
-    <Compile Include="UI\Command\CodeMetricsCommand.cs" />
-    <Compile Include="UI\Command\MenuItems\CodeMetricsCommandMenuItem.cs" />
     <Compile Include="UI\Converters\DeclarationToMemberSignatureConverter.cs" />
     <Compile Include="UI\Converters\StringHasNoValueToVisibilityConverter.cs" />
     <Compile Include="UI\Converters\StringHasValueToVisibilityConverter.cs" />
     <Compile Include="UI\CodeMetrics\CodeMetricsControl.xaml.cs">
       <DependentUpon>CodeMetricsControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Command\ExportAllCommand.cs" />
     <Compile Include="UI\CodeExplorer\Commands\OpenProjectPropertiesCommand.cs" />
     <Compile Include="UI\CodeExplorer\Commands\RenameCommand.cs" />
     <Compile Include="UI\CodeExplorer\Commands\IndentCommand.cs" />
@@ -422,14 +492,6 @@
     <Compile Include="UI\CodeExplorer\Commands\AddClassModuleCommand.cs" />
     <Compile Include="UI\CodeExplorer\Commands\AddStdModuleCommand.cs" />
     <Compile Include="UI\CodeExplorer\Commands\AddComponentCommand.cs" />
-    <Compile Include="UI\Command\FormDesignerFindAllReferencesCommand.cs" />
-    <Compile Include="UI\Command\IndentCurrentProjectCommand.cs" />
-    <Compile Include="UI\Command\MenuItems\CommandBars\ContextDescriptionLabelMenuItem.cs" />
-    <Compile Include="UI\Command\MenuItems\RefreshCommandMenuItem.cs" />
-    <Compile Include="UI\Command\MenuItems\FormDesignerFindAllReferencesCommandMenuItem.cs" />
-    <Compile Include="UI\Command\MenuItems\IndentCurrentProjectCommandMenuItem.cs" />
-    <Compile Include="UI\Command\MenuItems\ExportAllCommandMenuItem.cs" />
-    <Compile Include="UI\Command\RefreshCommand .cs" />
     <Compile Include="UI\Controls\EmptyUIRefresh.xaml.cs">
       <DependentUpon>EmptyUIRefresh.xaml</DependentUpon>
     </Compile>
@@ -532,33 +594,12 @@
     <Compile Include="UI\UnitTesting\Commands\RunSucceededTestsCommand.cs" />
     <Compile Include="UI\UnitTesting\ViewModels\TestMethodViewModel.cs" />
     <Compile Include="VersionCheck\IVersionCheck.cs" />
-    <Compile Include="UI\Command\MenuItems\CommandBars\AppCommandBarBase.cs" />
-    <Compile Include="UI\Command\MenuItems\CommandBars\ContextSelectionLabelMenuItem.cs" />
-    <Compile Include="UI\Command\MenuItems\CommandBars\IContextFormatter.cs" />
-    <Compile Include="UI\Command\MenuItems\CommandBars\ReferenceCounterLabelMenuItem.cs" />
-    <Compile Include="UI\Command\MenuItems\CommandBars\ReparseCommandMenuItem.cs" />
-    <Compile Include="UI\Command\MenuItems\CommandBars\RubberduckCommandBar.cs" />
-    <Compile Include="UI\Command\MenuItems\CommandBars\SerializeDeclarationsCommandMenuItem.cs" />
-    <Compile Include="UI\Command\MenuItems\CommandBars\ShowParserErrorsCommandMenuItem.cs" />
-    <Compile Include="UI\Command\MenuItems\CommandBars\IAppCommandBar.cs" />
-    <Compile Include="UI\Command\RegexAssistantCommand.cs" />
-    <Compile Include="UI\Command\MenuItems\RegexAssistantCommandMenuItem.cs" />
-    <Compile Include="UI\Command\MenuItems\ParentMenus\ToolsParentMenu.cs" />
-    <Compile Include="UI\Command\VersionCheckCommand.cs" />
     <Compile Include="UI\Controls\BindableTextEditor.cs" />
     <Compile Include="UI\Controls\LinkButton.xaml.cs">
       <DependentUpon>LinkButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Converters\InvertBoolValueConverter.cs" />
     <Compile Include="UI\Converters\BoolToHiddenVisibilityConverter.cs" />
-    <Compile Include="UI\Command\MenuItems\NoIndentAnnotationCommandMenuItem.cs" />
-    <Compile Include="UI\Command\MenuItems\IndentCurrentModuleCommandMenuItem.cs" />
-    <Compile Include="UI\Command\NoIndentAnnotationCommand.cs" />
-    <Compile Include="UI\Command\IndentCurrentModuleCommand.cs" />
-    <Compile Include="UI\Command\MenuItems\InspectionResultsCommandMenuItem.cs" />
-    <Compile Include="UI\Command\ReparseCommand.cs" />
-    <Compile Include="UI\Command\ShowParserErrorsCommand.cs" />
-    <Compile Include="UI\Command\SyntaxErrorExtensions.cs" />
     <Compile Include="UI\Controls\DeclarationTypeToStringConverter.cs" />
     <Compile Include="UI\Controls\SearchResultPresenterInstanceManager.cs" />
     <Compile Include="UI\Controls\ISearchResultsWindowViewModel.cs" />
@@ -600,73 +641,9 @@
     </Compile>
     <Compile Include="UI\Inspections\InspectionResultsViewModel.cs" />
     <Compile Include="UI\Inspections\InspectionSeverityImageSourceConverter.cs" />
-    <Compile Include="UI\Command\AboutCommand.cs" />
     <Compile Include="UI\UnitTesting\Commands\AddTestMethodExpectedErrorCommand.cs" />
     <Compile Include="UI\UnitTesting\Commands\AddTestMethodCommand.cs" />
     <Compile Include="UI\UnitTesting\Commands\AddTestModuleCommand.cs" />
-    <Compile Include="UI\Command\CommandBase.cs" />
-    <Compile Include="UI\Command\DelegateCommand.cs" />
-    <Compile Include="UI\Command\IndentCurrentProcedureCommand.cs" />
-    <Compile Include="UI\Command\MenuItems\AddTestMethodCommandMenuItem.cs" />
-    <Compile Include="UI\Command\MenuItems\AddTestMethodExpectedErrorCommandMenuItem.cs" />
-    <Compile Include="UI\Command\MenuItems\AddTestModuleCommandMenuItem.cs" />
-    <Compile Include="UI\Command\MenuItems\ProjectExplorerRefactorRenameCommandMenuItem.cs" />
-    <Compile Include="UI\Command\MenuItems\FormDesignerRefactorRenameCommandMenuItem.cs" />
-    <Compile Include="UI\Command\MenuItems\FindAllReferencesCommandMenuItem.cs" />
-    <Compile Include="UI\Command\MenuItems\FindSymbolCommandMenuItem.cs" />
-    <Compile Include="UI\Command\MenuItems\FindAllImplementationsCommandMenuItem.cs" />
-    <Compile Include="UI\Command\MenuItems\CodeExplorerCommandMenuItem.cs" />
-    <Compile Include="UI\Command\MenuItems\AboutCommandMenuItem.cs" />
-    <Compile Include="UI\Command\CodeExplorerCommand.cs" />
-    <Compile Include="UI\Command\MenuItems\IAppMenu.cs" />
-    <Compile Include="UI\Command\MenuItems\IndentCurrentProcedureCommandMenuItem.cs" />
-    <Compile Include="UI\Command\MenuItems\ParentMenus\IParentMenuItem.cs" />
-    <Compile Include="UI\Command\MenuItems\ParentMenus\CodePaneContextParentMenu.cs" />
-    <Compile Include="UI\Command\MenuItems\CommandMenuItemBase.cs" />
-    <Compile Include="UI\Command\MenuItems\ParentMenus\FormDesignerContextParentMenu.cs" />
-    <Compile Include="UI\Command\IMenuItem.cs" />
-    <Compile Include="UI\Command\FindAllImplementationsCommand.cs" />
-    <Compile Include="UI\Command\FindSymbolCommand.cs" />
-    <Compile Include="UI\Command\FindAllReferencesCommand.cs" />
-    <Compile Include="UI\Command\MenuItems\ParentMenus\NavigateParentMenu.cs" />
-    <Compile Include="UI\Command\MenuItems\ParentMenus\SmartIndenterParentMenu.cs" />
-    <Compile Include="UI\Command\MenuItems\RefactorEncapsulateFieldCommandMenuItem.cs" />
-    <Compile Include="UI\Command\MenuItems\RefactorImplementInterfaceCommandMenuItem.cs" />
-    <Compile Include="UI\Command\MenuItems\RefactorExtractInterfaceCommandMenuItem.cs" />
-    <Compile Include="UI\Command\MenuItems\RefactorIntroduceFieldCommandMenuItem.cs" />
-    <Compile Include="UI\Command\MenuItems\RefactorIntroduceParameterCommandMenuItem.cs" />
-    <Compile Include="UI\Command\MenuItems\RefactorMoveCloserToUsageCommandMenuItem.cs" />
-    <Compile Include="UI\Command\MenuItems\RegexSearchReplaceCommandMenuItem.cs" />
-    <Compile Include="UI\Command\NavigateCommand.cs" />
-    <Compile Include="UI\Command\SettingsCommand.cs" />
-    <Compile Include="UI\Command\MenuItems\SettingsCommandMenuItem.cs" />
-    <Compile Include="UI\Command\MenuItems\ParentMenus\ParentMenuItemBase.cs" />
-    <Compile Include="UI\Command\MenuItems\ParentMenus\ProjectWindowContextParentMenu.cs" />
-    <Compile Include="UI\Command\MenuItems\RefactorExtractMethodCommandMenuItem.cs" />
-    <Compile Include="UI\Command\MenuItems\ParentMenus\RefactoringsParentMenu.cs" />
-    <Compile Include="UI\Command\MenuItems\RefactorRemoveParametersCommandMenuItem.cs" />
-    <Compile Include="UI\Command\Refactorings\FormDesignerRefactorRenameCommand.cs" />
-    <Compile Include="UI\Command\Refactorings\ProjectExplorerRefactorRenameCommand.cs" />
-    <Compile Include="UI\Command\Refactorings\RefactorEncapsulateFieldCommand.cs" />
-    <Compile Include="UI\Command\Refactorings\RefactorImplementInterfaceCommand.cs" />
-    <Compile Include="UI\Command\Refactorings\RefactorExtractInterfaceCommand.cs" />
-    <Compile Include="UI\Command\Refactorings\RefactorIntroduceFieldCommand.cs" />
-    <Compile Include="UI\Command\Refactorings\RefactorIntroduceParameterCommand.cs" />
-    <Compile Include="UI\Command\Refactorings\RefactorMoveCloserToUsageCommand.cs" />
-    <Compile Include="UI\Command\Refactorings\CodePaneRefactorRenameCommand.cs" />
-    <Compile Include="UI\Command\MenuItems\CodePaneRefactorRenameCommandMenuItem.cs" />
-    <Compile Include="UI\Command\Refactorings\RefactorReorderParametersCommand.cs" />
-    <Compile Include="UI\Command\MenuItems\RefactorReorderParametersCommandMenuItem.cs" />
-    <Compile Include="UI\Command\MenuItems\ParentMenus\RubberduckParentMenu.cs" />
-    <Compile Include="UI\Command\RegexSearchReplaceCommand.cs" />
-    <Compile Include="UI\Command\RunAllTestsCommand.cs" />
-    <Compile Include="UI\Command\MenuItems\RunAllTestsCommandMenuItem.cs" />
-    <Compile Include="UI\Command\InspectionResultsCommand.cs" />
-    <Compile Include="UI\Command\TestExplorerCommand.cs" />
-    <Compile Include="UI\Command\MenuItems\TestExplorerCommandMenuItem.cs" />
-    <Compile Include="UI\Command\ToDoExplorerCommand.cs" />
-    <Compile Include="UI\Command\MenuItems\ToDoExplorerCommandMenuItem.cs" />
-    <Compile Include="UI\Command\MenuItems\ParentMenus\UnitTestingParentMenu.cs" />
     <Compile Include="UI\Controls\SearchResultItem.cs" />
     <Compile Include="UI\Controls\SearchResultsDockablePresenter.cs" />
     <Compile Include="UI\Controls\SearchResultsViewModel.cs" />
@@ -832,9 +809,6 @@
     <Compile Include="UI\ViewModelBase.cs" />
     <Compile Include="UI\UnitTesting\TestOutcomeImageSourceConverter.cs" />
     <Compile Include="UI\UnitTesting\TestResultToOutcomeTextConverter.cs" />
-    <Compile Include="UI\Command\Refactorings\RefactorCommandBase.cs" />
-    <Compile Include="UI\Command\Refactorings\RefactorExtractMethodCommand.cs" />
-    <Compile Include="UI\Command\Refactorings\RefactorRemoveParametersCommand.cs" />
     <Compile Include="VersionCheck\VersionCheck.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -905,6 +879,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\DataSources\" />
+    <Folder Include="UI\Bars\ToolBars\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoComplete\AutoCompleteFunctionBlock.cs" />

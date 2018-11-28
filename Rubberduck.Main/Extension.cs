@@ -37,6 +37,16 @@ namespace Rubberduck
     // ReSharper disable once InconsistentNaming // note: underscore prefix hides class from COM API
     public class _Extension : IDTExtensibility2
     {
+        [DllImport("SHCore.dll", SetLastError = true)]
+        private static extern bool SetProcessDpiAwareness(PROCESS_DPI_AWARENESS awareness);
+
+        private enum PROCESS_DPI_AWARENESS
+        {
+            Process_DPI_Unaware = 0,
+            Process_System_DPI_Aware = 1,
+            Process_Per_Monitor_DPI_Aware = 2
+        }
+
         private IVBE _vbe;
         private IAddIn _addin;
         private bool _isInitialized;
@@ -55,6 +65,8 @@ namespace Rubberduck
         {
             try
             {
+                var result = SetProcessDpiAwareness(PROCESS_DPI_AWARENESS.Process_DPI_Unaware);
+
                 _vbe = RootComWrapperFactory.GetVbeWrapper(Application);
                 _addin = RootComWrapperFactory.GetAddInWrapper(AddInInst);
                 _addin.Object = this;
@@ -147,7 +159,7 @@ namespace Rubberduck
                         "Rubberduck", "rubberduck.config")
             };
             var configProvider = new GeneralConfigProvider(configLoader);
-            
+
             _initialSettings = configProvider.Create();
             if (_initialSettings != null)
             {
@@ -191,15 +203,15 @@ namespace Rubberduck
                 _logger.Fatal(exception);
                 System.Windows.Forms.MessageBox.Show(
 #if DEBUG
-                    exception.ToString(),
+                                exception.ToString(),
 #else
-                    exception.Message.ToString(),
+                                exception.Message.ToString(),
 #endif
-                    RubberduckUI.RubberduckLoadFailure, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                RubberduckUI.RubberduckLoadFailure, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
-            {                
-                splash?.Dispose();                
+            {
+                splash?.Dispose();
             }
         }
 
@@ -212,7 +224,7 @@ namespace Rubberduck
                 currentDomain.AssemblyResolve += LoadFromSameFolder;
 
                 _container = new WindsorContainer().Install(new RubberduckIoCInstaller(_vbe, _addin, _initialSettings));
-                
+
                 _app = _container.Resolve<App>();
                 _app.Startup();
 

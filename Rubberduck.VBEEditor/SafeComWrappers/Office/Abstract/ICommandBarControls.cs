@@ -9,4 +9,22 @@ namespace Rubberduck.VBEditor.SafeComWrappers.Abstract
         ICommandBarButton AddButton(int? before = null);
         ICommandBarPopup AddPopup(int? before = null);
     }
+
+    public static class ICommandBarControlsExtensions
+    {
+        public static int? GetIndex(this ICommandBarControls controls, int controlId)
+        {
+            for (var i = 1; i <= controls.Count; i++)
+            {
+                using (var item = controls[i])
+                {
+                    if (item.IsBuiltIn && item.Id == controlId)
+                    {
+                        return i;
+                    }
+                }
+            }
+            return null;
+        }
+    }
 }

@@ -5,12 +5,13 @@ using NLog;
 using Rubberduck.Common;
 using Rubberduck.Interaction;
 using Rubberduck.Settings;
-using Rubberduck.UI.Command.MenuItems;
+//using Rubberduck.UI.Command.MenuItems;
 using System;
 using System.Diagnostics;
 using System.Globalization;
 using Rubberduck.Parsing.UIContext;
 using Rubberduck.Resources;
+using Rubberduck.UI.Bars;
 using Rubberduck.UI.Command;
 using Rubberduck.VBEditor.SafeComWrappers.Abstract;
 using Rubberduck.VBEditor.Utility;
@@ -23,7 +24,7 @@ namespace Rubberduck
     {
         private readonly IMessageBox _messageBox;
         private readonly IGeneralConfigService _configService;
-        private readonly IAppMenu _appMenus;
+        private readonly IVbeBars _vbeBars;
         private readonly IRubberduckHooks _hooks;
         private readonly IVersionCheck _version;
         private readonly CommandBase _checkVersionCommand;
@@ -35,14 +36,14 @@ namespace Rubberduck
         public App(IVBE vbe, 
             IMessageBox messageBox,
             IGeneralConfigService configService,
-            IAppMenu appMenus,
+            IVbeBars vbeBars,
             IRubberduckHooks hooks,
             IVersionCheck version,
             CommandBase checkVersionCommand)
         {
             _messageBox = messageBox;
             _configService = configService;
-            _appMenus = appMenus;
+            _vbeBars = vbeBars;
             _hooks = hooks;
             _version = version;
             _checkVersionCommand = checkVersionCommand;
@@ -113,16 +114,16 @@ namespace Rubberduck
 
             LogRubberduckStart();
             UpdateLoggingLevel();
-            
+
             CheckForLegacyIndenterSettings();
-            _appMenus.Initialize();
+            _vbeBars.Initialize();
             _hooks.HookHotkeys(); // need to hook hotkeys before we localize menus, to correctly display ShortcutTexts            
-            _appMenus.Localize();
+            //_appMenus.Localize();
 
             if (_config.UserSettings.GeneralSettings.CanCheckVersion)
             {
                 _checkVersionCommand.Execute(null);
-            }            
+            }
         }
 
         public void Shutdown()
@@ -148,7 +149,7 @@ namespace Rubberduck
                 CultureManager.UICulture = CultureInfo.GetCultureInfo(_config.UserSettings.GeneralSettings.Language.Code);
                 LocalizeResources(CultureManager.UICulture);
 
-                _appMenus.Localize();
+              //  _appMenus.Localize();
             }
             catch (CultureNotFoundException exception)
             {

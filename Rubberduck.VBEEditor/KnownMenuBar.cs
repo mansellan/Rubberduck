@@ -1,8 +1,8 @@
 ﻿namespace Rubberduck.VBEditor
 {
-    public enum CommandBarSite
+    public enum KnownMenuBar
     {
-        MenuBar,
+        Main,
         CodeWindow,
         ProjectExplorer,
         MsForm,

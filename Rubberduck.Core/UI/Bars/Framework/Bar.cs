@@ -1,10 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Windows.Input;
 
-namespace Rubberduck.UI.Bars
+namespace Rubberduck.UI.Bars.Framework
 {
     public interface IBar : ISelectableBarItem, IReadOnlyList<IBarItem>
     {
@@ -18,9 +17,9 @@ namespace Rubberduck.UI.Bars
         private readonly IList<IBarItem> _barItems = new List<IBarItem>();
         private readonly IDictionary<IBarItem, BarItemAvailability> _barItemAvailabilities = new Dictionary<IBarItem, BarItemAvailability>();
         private int _separatorIndex = 1;
-
-        protected Bar(string captionResourceKey = null, Image image = null, Image mask = null)
-            : base(captionResourceKey, image, mask)
+        
+        protected Bar(string captionKey = null, string toolTipTextKey = null)
+            : base(captionKey, toolTipTextKey)
         {
         }
 
@@ -54,16 +53,10 @@ namespace Rubberduck.UI.Bars
             // override template
         }
 
-        protected ICommandBarItem<TCommand> AddCommand<TCommand>(string captionResourceKey)
+        protected ICommandBarItem<TCommand> AddCommand<TCommand>(string captionKey = null, string toolTipTextKey = null)
             where TCommand : class, ICommand
         {
-            return AddCommand<TCommand>(captionResourceKey, null, null);
-        }
-
-        protected ICommandBarItem<TCommand> AddCommand<TCommand>(string captionResourceKey, Image image, Image mask)
-            where TCommand : class, ICommand
-        {
-            var commandItem = _barItemFactory.CreateCommandBarItem<TCommand>(captionResourceKey, image, mask);
+            var commandItem = _barItemFactory.CreateCommandBarItem<TCommand>(captionKey, toolTipTextKey);
             _barItems.Add(commandItem);
             return commandItem;
         }
@@ -75,10 +68,10 @@ namespace Rubberduck.UI.Bars
             return separator;
         }
 
-        protected TMenuBar AddMenuBar<TMenuBar>(string captionResourceKey = null, Image image = null, Image mask = null)
+        protected TMenuBar AddMenuBar<TMenuBar>(string captionKey = null, string toolTipTextKey = null)
             where TMenuBar : MenuBar
         {
-            var menuBar = _barItemFactory.CreateMenuBar<TMenuBar>(captionResourceKey, image, mask);
+            var menuBar = _barItemFactory.CreateMenuBar<TMenuBar>(captionKey, toolTipTextKey);
             _barItems.Add(menuBar);
             return menuBar;
         }

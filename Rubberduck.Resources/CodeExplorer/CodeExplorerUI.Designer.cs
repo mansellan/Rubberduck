@@ -115,6 +115,15 @@ namespace Rubberduck.Resources.CodeExplorer {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Predeclared Class module (.cls).
+        /// </summary>
+        public static string CodeExplorer_AddPredeclaredClassModuleText {
+            get {
+                return ResourceManager.GetString("CodeExplorer_AddPredeclaredClassModuleText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Standard module (.bas).
         /// </summary>
         public static string CodeExplorer_AddStdModuleText {
@@ -354,6 +363,15 @@ namespace Rubberduck.Resources.CodeExplorer {
         public static string CodeExplorer_Remove {
             get {
                 return ResourceManager.GetString("CodeExplorer_Remove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rename.
+        /// </summary>
+        public static string CodeExplorer_Rename {
+            get {
+                return ResourceManager.GetString("CodeExplorer_Rename", resourceCulture);
             }
         }
         

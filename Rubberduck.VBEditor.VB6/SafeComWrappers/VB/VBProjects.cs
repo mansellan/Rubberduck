@@ -9,7 +9,7 @@ using VB = Microsoft.Vbe.Interop.VB6;
 // ReSharper disable once CheckNamespace - Special dispensation due to conflicting file vs namespace priorities
 namespace Rubberduck.VBEditor.SafeComWrappers.VB6
 {
-    public class VBProjects : SafeEventedComWrapper<VB.VBProjects, VB._dispVBProjectsEvents>, IVBProjects, VB._dispVBProjectsEvents
+    public sealed class VBProjects : SafeEventedComWrapper<VB.VBProjects, VB._dispVBProjectsEvents>, IVBProjects, VB._dispVBProjectsEvents
     {
         public VBProjects(VB.VBProjects target, bool rewrapping = false)
         :base(target, rewrapping)
@@ -74,6 +74,8 @@ namespace Rubberduck.VBEditor.SafeComWrappers.VB6
                 : HashCode.Compute(Target);
         }
 
+        protected override void Dispose(bool disposing) => base.Dispose(disposing);
+
         #region Events
 
         public event EventHandler<ProjectEventArgs> ProjectAdded;
@@ -92,23 +94,23 @@ namespace Rubberduck.VBEditor.SafeComWrappers.VB6
         void VB._dispVBProjectsEvents.ItemRenamed([MarshalAs(UnmanagedType.Interface), In] VB.VBProject VBProject,
             [MarshalAs(UnmanagedType.BStr), In] string OldName)
         {
-            var project = new VBProject(VBProject);
-
-            if (!IsInDesignMode())
+            using (var project = new VBProject(VBProject))
             {
-                project.Dispose();
-                return;
-            }
+                if (!IsInDesignMode())
+                {
+                    return;
+                }
 
-            var projectId = project.ProjectId;
+                var projectId = project.ProjectId;
 
-            var handler = ProjectRenamed;
-            if (handler == null || projectId == null)
-            {
-                project.Dispose();
-                return;
+                if (projectId == null)
+                {
+                    return;
+                }
+
+                var handler = ProjectRenamed;
+                handler?.Invoke(this, new ProjectRenamedEventArgs(projectId, project.Name, OldName));
             }
-            handler.Invoke(project, new ProjectRenamedEventArgs(projectId, project, OldName));
         }
 
         public event EventHandler<ProjectEventArgs> ProjectActivated;
@@ -119,26 +121,28 @@ namespace Rubberduck.VBEditor.SafeComWrappers.VB6
 
         private void OnDispatch(EventHandler<ProjectEventArgs> dispatched, VB.VBProject vbProject, bool assignId = false)
         {
-            var project = new VBProject(vbProject);
-            var handler = dispatched;
-            if (handler == null || !IsInDesignMode())
+            using (var project = new VBProject(vbProject))
             {
-                project.Dispose();
-                return;
-            }
+                var handler = dispatched;
+                if (handler == null || !IsInDesignMode())
+                {
+                    return;
+                }
 
-            if (assignId)
-            {
-                project.AssignProjectId();
-            }
-            var projectId = project.ProjectId;
+                if (assignId)
+                {
+                    project.AssignProjectId();
+                }
 
-            if (projectId == null)
-            {
-                project.Dispose();
-                return;
+                var projectId = project.ProjectId;
+
+                if (projectId == null)
+                {
+                    return;
+                }
+
+                handler.Invoke(project, new ProjectEventArgs(projectId, project.Name));
             }
-            handler.Invoke(project, new ProjectEventArgs(projectId, project));
         }
 
         private bool IsInDesignMode()

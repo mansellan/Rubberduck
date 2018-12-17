@@ -1,4 +1,6 @@
 ﻿using Rubberduck.Resources;
+using Rubberduck.Resources.Menus;
+using Rubberduck.UI.Bars.Framework;
 using Rubberduck.UI.Command;
 
 namespace Rubberduck.UI.Bars.MenuBars
@@ -15,19 +17,13 @@ namespace Rubberduck.UI.Bars.MenuBars
         public ICommandBarItem<SettingsCommand> Settings { get; private set;  }
         public ICommandBarItem<AboutCommand> About { get; private set;  }
 
-        public RubberduckMenuBar(string captionResourceKey)
-            : base(captionResourceKey)
-        {
-            
-        }
-
         protected override void DoInitialize()
         {
-            Refresh = AddCommand<RefreshCommand>("RubberduckMenu_Refresh", CommandBarIcons.arrow_circle_double, CommandBarIcons.arrow_circle_double_mask);
+            Refresh = AddCommand<RefreshCommand>();
 
             AddSeparator();
-            UnitTests = AddMenuBar<UnitTestsMenuBar>("RubberduckMenu_UnitTests");
-            Indent = AddMenuBar<IndentMenuBar>("SmartIndenterMenu");
+            UnitTests = AddMenuBar<UnitTestsMenuBar>();
+            Indent = AddMenuBar<IndentMenuBar>();
             Refactor = AddMenuBar<RefactorMenuBar>("RubberduckMenu_Refactor");
             Navigate = AddMenuBar<NavigateMenuBar>("RubberduckMenu_Navigate");
             Tools = AddMenuBar<ToolsMenuBar>("ToolsMenu");

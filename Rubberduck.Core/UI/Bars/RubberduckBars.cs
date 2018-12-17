@@ -1,21 +1,23 @@
 ﻿using Rubberduck.Resources;
+using Rubberduck.UI.Bars.Framework;
 using Rubberduck.UI.Bars.MenuBars;
+using Rubberduck.UI.Bars.ToolBars;
 
 namespace Rubberduck.UI.Bars
 {
     public class RubberduckBars : VbeBars
     {
-        // public RubberduckToolBar Toolbar { get; private set; } // TODO
-        public RubberduckMenuBar Menu { get; private set; }
+        public RubberduckToolBar ToolBar { get; private set; }
+        public RubberduckMenuBar MainMenu { get; private set; }
         public CodePaneContextMenuBar CodePane { get; private set; }
         public ProjectExplorerContextMenuBar ProjectExplorer { get; private set; }
         public FormDesignerContextMenuBar FormDesigner { get; private set; }
 
         protected override void DoInitialize()
         {
-            // AddToolBar<>();
+            ToolBar = AddToolBar<RubberduckToolBar>("RubberduckToolbar");
 
-            Menu = AddMenuBar<RubberduckMenuBar>("RubberduckMenu",
+            MainMenu = AddMenuBar<RubberduckMenuBar>("RubberduckMenu",
                 (VBEKind.Hosted, KnownId.VBA.Bar.Menu_Main, KnownId.VBA.BarItem.Menu_Window),
                 (VBEKind.Standalone, KnownId.VB6.Bar.Menu_Main, KnownId.VB6.BarItem.Menu_Window));
 

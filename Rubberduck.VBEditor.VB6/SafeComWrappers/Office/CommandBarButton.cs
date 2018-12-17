@@ -9,11 +9,11 @@ using VB = Microsoft.Vbe.Interop.VB6;
 // ReSharper disable once CheckNamespace - Special dispensation due to conflicting file vs namespace priorities
 namespace Rubberduck.VBEditor.SafeComWrappers.Office8
 {
-    public class CommandBarButton : SafeRedirectedEventedComWrapper<MSO.CommandBarButton, VB.CommandBarEvents, VB._dispCommandBarControlEvents>, ICommandBarButton, VB._dispCommandBarControlEvents
+    public sealed class CommandBarButton : SafeRedirectedEventedComWrapper<MSO.CommandBarButton, VB.CommandBarEvents, VB._dispCommandBarControlEvents>, ICommandBarButton, VB._dispCommandBarControlEvents
     {
         private readonly CommandBarControl _control;
         private readonly IVBE _vbe;
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
         public const bool AddCommandBarControlsTemporarily = false;        
 
         // Command bar click event is sourced from VBE.Events.CommandBarEvents[index]
@@ -21,7 +21,7 @@ namespace Rubberduck.VBEditor.SafeComWrappers.Office8
         public CommandBarButton(MSO.CommandBarButton target, IVBE vbe, bool rewrapping = false) 
             : base(target, rewrapping)
         {
-            _control = new CommandBarControl(target, vbe, rewrapping);
+            _control = new CommandBarControl(target, vbe, true);
             _vbe = vbe;
         }
         
@@ -277,14 +277,17 @@ namespace Rubberduck.VBEditor.SafeComWrappers.Office8
             {                
                 return;
             }
-            var button = new CommandBarButton((MSO.CommandBarButton)Ctrl, _vbe);
 
-            System.Diagnostics.Debug.Assert(handler.GetInvocationList().Length == 1, "Multicast delegate is registered more than once.");
+            using (var button = new CommandBarButton((MSO.CommandBarButton) Ctrl, _vbe))
+            {
+                System.Diagnostics.Debug.Assert(handler.GetInvocationList().Length == 1,
+                    "Multicast delegate is registered more than once.");
 
-            var args = new CommandBarButtonClickEventArgs(button);
-            handler.Invoke(this, args);
-            CancelDefault = args.Cancel;
-            Handled = args.Handled;
+                var args = new CommandBarButtonClickEventArgs(button);
+                handler.Invoke(this, args);
+                CancelDefault = args.Cancel;
+                Handled = args.Handled;
+            }
         }
 		
         public event EventHandler Disposing;

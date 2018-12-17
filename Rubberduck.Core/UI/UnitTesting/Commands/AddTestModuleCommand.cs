@@ -125,12 +125,14 @@ namespace Rubberduck.UI.UnitTesting.Commands
 
         private IVBProject GetProject()
         {
+            //No using because the wrapper gets returned potentially. 
             var activeProject = _vbe.ActiveVBProject;
             if (!activeProject.IsWrappingNullReference)
             {
                 return activeProject;
             }
-
+            activeProject.Dispose();
+            
             using (var projects = _vbe.VBProjects)
             {
                 return projects.Count == 1
@@ -141,8 +143,13 @@ namespace Rubberduck.UI.UnitTesting.Commands
 
         protected override bool EvaluateCanExecute(object parameter)
         {
-            var project = GetProject();
-            return project != null && !project.IsWrappingNullReference && CanExecuteCode(project);
+            bool canExecute;
+            using (var project = GetProject())
+            {
+                canExecute = project != null && !project.IsWrappingNullReference && CanExecuteCode(project);
+            }
+
+            return canExecute;
         }
         
         private bool CanExecuteCode(IVBProject project)
@@ -154,9 +161,25 @@ namespace Rubberduck.UI.UnitTesting.Commands
         {
             var parameterIsModuleDeclaration = parameter is ProceduralModuleDeclaration || parameter is ClassModuleDeclaration;
 
-            var project = parameter as IVBProject ??
-                          (parameterIsModuleDeclaration ? ((Declaration) parameter).Project : GetProject());
+            switch(parameter)
+            {
+                case IVBProject project:
+                    ExecuteInternal(project, null);
+                    break;
+                case Declaration declaration when parameterIsModuleDeclaration:
+                    ExecuteInternal(declaration.Project, declaration);
+                    break;
+                default:
+                    using (var project = GetProject())
+                    {
+                        ExecuteInternal(project, null);
+                    }
+                    break;
+            }
+        }
 
+        private void ExecuteInternal(IVBProject project, Declaration projectDeclaration)
+        {
             if (project == null || project.IsWrappingNullReference)
             {
                 return;
@@ -190,10 +213,10 @@ namespace Rubberduck.UI.UnitTesting.Commands
                             var options = string.Concat(hasOptionExplicit ? string.Empty : "Option Explicit\r\n",
                                 "Option Private Module\r\n\r\n");
 
-                            if (parameterIsModuleDeclaration)
+                            if (projectDeclaration != null)
                             {
                                 var moduleCodeBuilder = new StringBuilder();
-                                var declarationsToStub = GetDeclarationsToStub((Declaration) parameter);
+                                var declarationsToStub = GetDeclarationsToStub(projectDeclaration);
 
                                 foreach (var declaration in declarationsToStub)
                                 {
@@ -245,6 +268,7 @@ namespace Rubberduck.UI.UnitTesting.Commands
                 Logger.Warn("Unable to add test module. An exception was thrown.");
                 Logger.Warn(ex);
             }
+
             _state.OnParseRequested(this);
         }
 

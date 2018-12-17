@@ -189,78 +189,71 @@ namespace Rubberduck.VBEditor.SafeComWrappers.VBA
             }
 
             var host = Path.GetFileName(System.Windows.Forms.Application.ExecutablePath).ToUpperInvariant();
-            //These need the VBE as a ctor argument.
-            if (host.Equals("SLDWORKS.EXE") || host.Equals("POWERPNT.EXE"))
+
+            if (HostAppMap.ContainsKey(host))
             {
                 return (IHostApplication)Activator.CreateInstance(HostAppMap[host], this);
             }
-            //The rest don't.
-            if (HostAppMap.ContainsKey(host))
-            {
-                return (IHostApplication)Activator.CreateInstance(HostAppMap[host]);
-            }
 
             //Guessing the above will work like 99.9999% of the time for supported applications.
-            var project = ActiveVBProject;
+            using (var project = ActiveVBProject)
             {
                 if (project.IsWrappingNullReference)
                 {
                     const int ctlViewHost = 106;
 
-                    var commandBars = CommandBars;
-                    var hostAppControl = commandBars.FindControl(ControlType.Button, ctlViewHost);
+                    using (var commandBars = CommandBars)
                     {
-
-                        IHostApplication result;
-                        if (hostAppControl.IsWrappingNullReference)
+                        var hostAppControl = commandBars.FindControl(ControlType.Button, ctlViewHost);
                         {
-                            result = null;
-                        }
-                        else
-                        {
-                            switch (hostAppControl.Caption)
+                            IHostApplication result;
+                            if (hostAppControl.IsWrappingNullReference)
                             {
-                                case "Microsoft Excel":
-                                    result = new ExcelApp();
-                                    break;
-                                case "Microsoft Access":
-                                    result = new AccessApp();
-                                    break;
-                                case "Microsoft Word":
-                                    result = new WordApp();
-                                    break;
-                                case "Microsoft PowerPoint":
-                                    result = new PowerPointApp(this);
-                                    break;
-                                case "Microsoft Outlook":
-                                    result = new OutlookApp();
-                                    break;
-                                case "Microsoft Project":
-                                    result = new ProjectApp();
-                                    break;
-                                case "Microsoft Publisher":
-                                    result = new PublisherApp();
-                                    break;
-                                case "Microsoft Visio":
-                                    result = new VisioApp();
-                                    break;
-                                case "AutoCAD":
-                                    result = new AutoCADApp();
-                                    break;
-                                case "CorelDRAW":
-                                    result = new CorelDRAWApp();
-                                    break;
-                                case "SolidWorks":
-                                    result = new SolidWorksApp(this);
-                                    break;
-                                default:
-                                    result = null;
-                                    break;
+                                result = null;
+                            }
+                            else
+                            {
+                                switch (hostAppControl.Caption)
+                                {
+                                    case "Microsoft Excel":
+                                        result = new ExcelApp(this);
+                                        break;
+                                    case "Microsoft Access":
+                                        result = new AccessApp(this);
+                                        break;
+                                    case "Microsoft Word":
+                                        result = new WordApp(this);
+                                        break;
+                                    case "Microsoft PowerPoint":
+                                        result = new PowerPointApp(this);
+                                        break;
+                                    case "Microsoft Outlook":
+                                        result = new OutlookApp(this);
+                                        break;
+                                    case "Microsoft Project":
+                                        result = new ProjectApp(this);
+                                        break;
+                                    case "Microsoft Publisher":
+                                        result = new PublisherApp(this);
+                                        break;
+                                    case "Microsoft Visio":
+                                        result = new VisioApp(this);
+                                        break;
+                                    case "AutoCAD":
+                                        result = new AutoCADApp(this);
+                                        break;
+                                    case "CorelDRAW":
+                                        result = new CorelDRAWApp(this);
+                                        break;
+                                    case "SolidWorks":
+                                        result = new SolidWorksApp(this);
+                                        break;
+                                    default:
+                                        result = null;
+                                        break;
+                                }
                             }
                         }
-
-                        _host = result;
-                        return result;
                     }
                 }
 
@@ -273,21 +266,21 @@ namespace Rubberduck.VBEditor.SafeComWrappers.VBA
                             case "Excel":
                                 return new ExcelApp(this);
                             case "Access":
-                                return new AccessApp();
+                                return new AccessApp(this);
                             case "Word":
                                 return new WordApp(this);
                             case "PowerPoint":
                                 return new PowerPointApp(this);
                             case "Outlook":
-                                return new OutlookApp();
+                                return new OutlookApp(this);
                             case "MSProject":
-                                return new ProjectApp();
+                                return new ProjectApp(this);
                             case "Publisher":
-                                return new PublisherApp();
+                                return new PublisherApp(this);
                             case "Visio":
-                                return new VisioApp();
+                                return new VisioApp(this);
                             case "AutoCAD":
-                                return new AutoCADApp();
+                                return new AutoCADApp(this);
                             case "CorelDRAW":
                                 return new CorelDRAWApp(this);
                             case "SolidWorks":
@@ -339,6 +332,8 @@ namespace Rubberduck.VBEditor.SafeComWrappers.VBA
                 return activePane.GetQualifiedSelection();
             }
         }
+
+        protected override void Dispose(bool disposing) => base.Dispose(disposing);
     }
 }
 

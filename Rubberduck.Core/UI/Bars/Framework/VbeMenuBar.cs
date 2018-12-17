@@ -6,24 +6,29 @@ using System.Reactive.Linq;
 using Rubberduck.VBEditor.SafeComWrappers;
 using Rubberduck.VBEditor.SafeComWrappers.Abstract;
 
-namespace Rubberduck.UI.Bars
+namespace Rubberduck.UI.Bars.Framework
 {
-    public class VbeMenuBar : IDisposable
+    public interface IVbeMenuBar : IDisposable
+    {
+        void Initialize();
+    }
+
+    public class VbeMenuBar : IVbeMenuBar
     {
         private readonly IVBE _vbe;
         private readonly ICommandBarControls _parent;
         private readonly int? _beforeControlIndex;
-        private ICommandBarPopup _item;
+        private ICommandBarPopup _popup;
         private readonly MenuBar _menuBar;
         private readonly bool _beginsGroup;
         private readonly IDictionary<ICommandBarItem, ICommandBarControl> _commandBarItems = new Dictionary<ICommandBarItem, ICommandBarControl>();
-        private readonly IList<VbeMenuBar> _vbeMenuBars = new List<VbeMenuBar>();
+        private readonly IList<IVbeMenuBar> _vbeMenuBars = new List<IVbeMenuBar>();
         private readonly CompositeDisposable _disposables = new CompositeDisposable();
 
         public VbeMenuBar(IVBE vbe, MenuBar menuBar, ICommandBarControls parent, int? beforeControlId)
             : this(vbe, menuBar, parent, false)
         {
-            if (beforeControlId.HasValue)
+            if (beforeControlId.HasValue) 
             {
                 _beforeControlIndex = parent.GetIndex(beforeControlId.Value);
             }
@@ -38,18 +43,21 @@ namespace Rubberduck.UI.Bars
             _disposables.Add(_parent);
         }
 
-        public void Initialize()
+        void IVbeMenuBar.Initialize()
         {
             _menuBar.Initialize();
 
             var beginsGroup = _beginsGroup;
-            _item = _parent.AddPopup(_beforeControlIndex);
-            _item.BeginsGroup = beginsGroup;           
-            _disposables.Add(_item);
-            _item.Caption = _menuBar.Caption;
+            using (_parent)
+            {
+                _popup = _parent.AddPopup(_beforeControlIndex);
+            }                
+            _popup.BeginsGroup = beginsGroup;           
+            _disposables.Add(_popup);
+            _popup.Caption = _menuBar.Caption;
             
             
-            using (var controls = _item.Controls)
+            using (var controls = _popup.Controls)
             {
                 foreach (var barItem in _menuBar)
                 {
@@ -60,9 +68,9 @@ namespace Rubberduck.UI.Bars
                             break;
 
                         case MenuBar menuBar:
-                            using (var childControls = _item.Controls)
+                            using (var childControls = _popup.Controls)
                             {
-                                var vbeMenuBar = new VbeMenuBar(_vbe, menuBar, childControls, beginsGroup);                                
+                                var vbeMenuBar = new VbeMenuBar(_vbe, menuBar, childControls, beginsGroup) as IVbeMenuBar;                                
                                 vbeMenuBar.Initialize();
                                 _vbeMenuBars.Add(vbeMenuBar);                                
                             }

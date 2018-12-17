@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using Rubberduck.Resources;
-using Rubberduck.UI.Bars.MenuBars;
-using Rubberduck.VBEditor;
 using Rubberduck.VBEditor.SafeComWrappers;
 using Rubberduck.VBEditor.SafeComWrappers.Abstract;
 
-namespace Rubberduck.UI.Bars
+namespace Rubberduck.UI.Bars.Framework
 {
     public interface IVbeBars : IDisposable
     {
@@ -16,6 +15,7 @@ namespace Rubberduck.UI.Bars
         IVBE Vbe { set; }
         IAddIn AddIn { set; }
         IMenuBarFactory MenuBarFactory { set; }
+        IToolBarFactory ToolBarFactory { set; }
     }
 
     public abstract class VbeBars : IVbeBars
@@ -35,22 +35,35 @@ namespace Rubberduck.UI.Bars
             set => _menuBarFactory = value;
         }
 
-        private readonly IList<VbeMenuBar> _vbeMenuBars = new List<VbeMenuBar>();
+        IToolBarFactory IVbeBars.ToolBarFactory
+        {
+            set => _toolBarFactory = value;
+        }
+
+        private readonly IList<IVbeMenuBar> _vbeMenuBars = new List<IVbeMenuBar>();
+        private readonly IList<IVbeToolBar> _vbeToolBars = new List<IVbeToolBar>();
         private IVBE _vbe;
         private IAddIn _addIn;
         private IMenuBarFactory _menuBarFactory;
+        private IToolBarFactory _toolBarFactory;
 
         public void Initialize()
         {
             Debug.Assert(_vbe != null, "Unable to initialize VBE bars - VBE not set.");
             Debug.Assert(_addIn != null, "Unable to initialize VBE bars - AddIn not set.");
             Debug.Assert(_menuBarFactory != null, "Unable to initialize VBE bars - MenuBarFactory not set.");
+            Debug.Assert(_toolBarFactory != null, "Unable to initialize VBE bars - ToolBarFactory not set.");
 
             DoInitialize();
 
             foreach (var vbeMenuBar in _vbeMenuBars)
             {
                 vbeMenuBar.Initialize();
+            }
+
+            foreach (var vbeToolBar in _vbeToolBars)
+            {
+                vbeToolBar.Initialize();
             }
         }
 
@@ -61,6 +74,11 @@ namespace Rubberduck.UI.Bars
             foreach (var vbeMenuBar in _vbeMenuBars)
             {
                 vbeMenuBar.Dispose();
+            }
+
+            foreach (var vbeToolBar in _vbeToolBars)
+            {
+                vbeToolBar.Dispose();
             }
         }
 
@@ -84,6 +102,14 @@ namespace Rubberduck.UI.Bars
             }
 
             return menuBar;          
+        }
+
+        protected TToolBar AddToolBar<TToolBar>(string name, CommandBarPosition position = CommandBarPosition.Top)
+            where TToolBar : ToolBar
+        {
+            var toolBar = _toolBarFactory.Create<TToolBar>();
+            _vbeToolBars.Add(new VbeToolBar(name, _vbe, toolBar, position));            
+            return toolBar;
         }
     }
 }

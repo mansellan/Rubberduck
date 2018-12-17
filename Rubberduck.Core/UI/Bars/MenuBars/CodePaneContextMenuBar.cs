@@ -1,11 +1,13 @@
-﻿using Rubberduck.UI.Command;
+﻿using System.Resources;
+using Rubberduck.UI.Bars.Framework;
+using Rubberduck.UI.Command;
 
 namespace Rubberduck.UI.Bars.MenuBars
 {
     public class CodePaneContextMenuBar : MenuBar
     {
-        public CodePaneContextMenuBar(string captionResourceKey)
-            : base(captionResourceKey)
+        public CodePaneContextMenuBar()
+            : base("RubberduckMenu")
         {
         }
 

@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Windows.Input;
-using Rubberduck.UI.Bars.MenuBars;
 
-namespace Rubberduck.UI.Bars
+namespace Rubberduck.UI.Bars.Framework
 {
     public interface IBarItemFactory
     {
-        ICommandBarItem<TCommand> CreateCommandBarItem<TCommand>(string captionKey = null, Image image = null, Image mask = null)
+        ICommandBarItem<TCommand> CreateCommandBarItem<TCommand>(string captionKey = null, string toolTipTextKey = null)
             where TCommand : class, ICommand;
 
-        TMenuBar CreateMenuBar<TMenuBar>(string captionResourceKey = null, Image image = null, Image mask = null)
+        TMenuBar CreateMenuBar<TMenuBar>(string captionKey = null, string toolTipTextKey = null)
             where TMenuBar : MenuBar;
 
         SeparatorBarItem CreateSeparatorBarItem(int index);
@@ -31,20 +29,20 @@ namespace Rubberduck.UI.Bars
             _separatorFactory = separatorFactory;
         }
 
-        public ICommandBarItem<TCommand> CreateCommandBarItem<TCommand>(string captionKey = null, Image image = null, Image mask = null)
+        public ICommandBarItem<TCommand> CreateCommandBarItem<TCommand>(string captionKey = null, string toolTipTextKey = null)
             where TCommand : class, ICommand 
         {
             if (_commands.TryGetValue(typeof(TCommand), out var command))
             {
-                return new CommandBarItem<TCommand>(command as TCommand, captionKey, image, mask);
+                return new CommandBarItem<TCommand>(command as TCommand, captionKey, toolTipTextKey);
             }
             throw new ApplicationException("TODO");         
         }
 
-        public TMenuBar CreateMenuBar<TMenuBar>(string captionResourceKey = null, Image image = null, Image mask = null)
+        public TMenuBar CreateMenuBar<TMenuBar>(string captionKey = null, string toolTipTextKey = null)
             where TMenuBar : MenuBar
         {
-            return _menuBarFactory.Create<TMenuBar>(captionResourceKey, image, mask);
+            return _menuBarFactory.Create<TMenuBar>(captionKey, toolTipTextKey);
         }
 
         public SeparatorBarItem CreateSeparatorBarItem(int index)

@@ -4,7 +4,7 @@ using Rubberduck.VBEditor.WindowsApi;
 
 namespace Rubberduck.VBEditor.Events
 {
-    public class KeyPressEventArgs
+    public class KeyPressEventArgs : EventArgs
     {
         public KeyPressEventArgs(IntPtr hwnd, IntPtr wParam, IntPtr lParam, bool keydown = false)
         {
@@ -15,12 +15,22 @@ namespace Rubberduck.VBEditor.Events
 
             if (keydown)
             {
-                // Why \r and not \n? Because it really doesn't matter...
-                Character = ((Keys)wParam & Keys.KeyCode) == Keys.Enter? '\r' : default;
+                if (((Keys) wParam & Keys.KeyCode) == Keys.Enter)
+                {
+                    // Why \r and not \n? Because it really doesn't matter...
+                    Character = '\r';
+                }
+                else if (((Keys) wParam & Keys.KeyCode) == Keys.Back)
+                {
+                    Character = '\b';
+                }
+                else
+                {
+                    Character = default;
+                }
             }
             else
-            {
-                
+            {              
                 Character = (char)wParam;
             }
         }

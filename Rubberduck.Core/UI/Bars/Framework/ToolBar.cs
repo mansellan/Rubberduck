@@ -1,9 +1,9 @@
-﻿namespace Rubberduck.UI.Bars
+﻿namespace Rubberduck.UI.Bars.Framework
 {
     public abstract class ToolBar : Bar
     {
-        protected ToolBar(string key)
-            : base(key)
+        protected ToolBar()
+            : base()
         {            
         }
     }

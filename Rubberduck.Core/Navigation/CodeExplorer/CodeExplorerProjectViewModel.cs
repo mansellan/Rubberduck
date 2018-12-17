@@ -97,8 +97,7 @@ namespace Rubberduck.Navigation.CodeExplorer
         }
 
         private readonly BitmapImage _icon;
-        public override BitmapImage CollapsedIcon => _icon;
-        public override BitmapImage ExpandedIcon => _icon;
+        public override BitmapImage CollapsedIcon => _icon;public override BitmapImage ExpandedIcon => _icon;
 
         public override FontWeight FontWeight
         {

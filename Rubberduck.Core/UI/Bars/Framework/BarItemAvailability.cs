@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Rubberduck.UI.Bars
+﻿namespace Rubberduck.UI.Bars.Framework
 {
     public enum BarItemAvailability
     {

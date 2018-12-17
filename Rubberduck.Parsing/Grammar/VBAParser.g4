@@ -549,9 +549,9 @@ upperBound : constantExpression;
 
 constantExpression : expression;
 
-variableStmt : (DIM | STATIC | visibility) whiteSpace (WITHEVENTS whiteSpace)? variableListStmt;
+variableStmt : (DIM | STATIC | visibility) whiteSpace variableListStmt;
 variableListStmt : variableSubStmt (whiteSpace? COMMA whiteSpace? variableSubStmt)*;
-variableSubStmt : identifier (whiteSpace? LPAREN whiteSpace? (subscripts whiteSpace?)? RPAREN)? (whiteSpace asTypeClause)?;
+variableSubStmt : (WITHEVENTS whiteSpace)? identifier (whiteSpace? LPAREN whiteSpace? (subscripts whiteSpace?)? RPAREN)? (whiteSpace asTypeClause)?;
 
 whileWendStmt : 
     WHILE whiteSpace expression endOfStatement 
@@ -681,8 +681,7 @@ builtInType :
 ;
 
 // 5.6.13.1 Argument Lists
-argumentList :
-    whiteSpace? (argument? (whiteSpace? COMMA whiteSpace? argument)*)??
+argumentList : whiteSpace? (argument? (whiteSpace? COMMA whiteSpace? argument)*)?? whiteSpace?
 ;
 
 requiredArgument : argument;
@@ -899,7 +898,7 @@ statementKeyword :
 ;
 
 endOfLine :
-    whiteSpace? NEWLINE whiteSpace?
+    whiteSpace? NEWLINE
     | whiteSpace? commentOrAnnotation
 ;
 
@@ -926,8 +925,8 @@ commentOrAnnotation :
 remComment : REM whiteSpace? commentBody;
 comment : SINGLEQUOTE commentBody;
 commentBody : (~NEWLINE)*;
-annotationList : SINGLEQUOTE (AT annotation whiteSpace?)+ (COLON commentBody)?;
-annotation : annotationName annotationArgList?;
+annotationList : SINGLEQUOTE (AT annotation)+ (COLON commentBody)?;
+annotation : annotationName annotationArgList? whiteSpace?;
 annotationName : unrestrictedIdentifier;
 annotationArgList : 
     whiteSpace annotationArg

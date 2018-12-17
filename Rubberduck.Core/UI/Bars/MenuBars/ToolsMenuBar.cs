@@ -1,4 +1,5 @@
-﻿using Rubberduck.UI.Command;
+﻿using Rubberduck.UI.Bars.Framework;
+using Rubberduck.UI.Command;
 
 namespace Rubberduck.UI.Bars.MenuBars
 {

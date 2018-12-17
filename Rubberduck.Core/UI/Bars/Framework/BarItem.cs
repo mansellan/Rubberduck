@@ -1,8 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Rubberduck.Annotations;
 
-namespace Rubberduck.UI.Bars
+namespace Rubberduck.UI.Bars.Framework
 {
     public interface IBarItem : INotifyPropertyChanged
     {
@@ -27,7 +26,6 @@ namespace Rubberduck.UI.Bars
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        [NotifyPropertyChangedInvocator]
         protected virtual void SetAndNotify<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
         {
             if (field.Equals(value))

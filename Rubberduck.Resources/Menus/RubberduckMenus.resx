@@ -235,10 +235,9 @@
     <value>Re&amp;order Parameters</value>
     <comment>TC: different hotkey</comment>
   </data>
-  <data name="Command_Refresh_Caption" xml:space="preserve">
-    <value>Refresh</value>
   </data>
-  <data name="MenuBar_UnitTests_Caption" xml:space="preserve">
-    <value>Unit &amp;Tests</value>
+    <value>Run selected test</value>
+  </data>
+  <data name="ContextMenu_RunSelectedTestModule" xml:space="preserve">
   </data>
 </root>

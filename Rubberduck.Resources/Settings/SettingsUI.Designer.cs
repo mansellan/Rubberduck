@@ -214,6 +214,15 @@ namespace Rubberduck.Resources.Settings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Warning! No Modifier!.
+        /// </summary>
+        public static string HotKeys_Exclamation {
+            get {
+                return ResourceManager.GetString("HotKeys_Exclamation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Import.
         /// </summary>
         public static string ImportPageSettingsButton {
@@ -255,6 +264,15 @@ namespace Rubberduck.Resources.Settings {
         public static string PageHeader_InspectionSettings {
             get {
                 return ResourceManager.GetString("PageHeader_InspectionSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reference Settings.
+        /// </summary>
+        public static string PageHeader_ReferenceSettings {
+            get {
+                return ResourceManager.GetString("PageHeader_ReferenceSettings", resourceCulture);
             }
         }
         
@@ -318,6 +336,15 @@ namespace Rubberduck.Resources.Settings {
         public static string PageInstructions_InspectionSettings {
             get {
                 return ResourceManager.GetString("PageInstructions_InspectionSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Configure settings for adding and removing references..
+        /// </summary>
+        public static string PageInstructions_ReferenceSettings {
+            get {
+                return ResourceManager.GetString("PageInstructions_ReferenceSettings", resourceCulture);
             }
         }
         

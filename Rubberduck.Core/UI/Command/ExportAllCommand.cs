@@ -1,6 +1,5 @@
 using System.IO;
 using System.Windows.Forms;
-using NLog;
 using Rubberduck.VBEditor.SafeComWrappers.Abstract;
 using Rubberduck.Navigation.CodeExplorer;
 using Rubberduck.Resources;
@@ -11,15 +10,17 @@ namespace Rubberduck.UI.Command
     public class ExportAllCommand : CommandBase 
     {
         private readonly IVBE _vbe;
-        private readonly IFolderBrowserFactory _factory;
+        private readonly IFileSystemBrowserFactory _factory;
 
-        public ExportAllCommand(IVBE vbe, IFolderBrowserFactory folderBrowserFactory) : base(LogManager.GetCurrentClassLogger())
+        public ExportAllCommand(IVBE vbe, IFileSystemBrowserFactory folderBrowserFactory)
         {
             _vbe = vbe;
             _factory = folderBrowserFactory;
+
+            AddToCanExecuteEvaluation(SpecialEvaluateCanExecute);
         }
 
-        protected override bool EvaluateCanExecute(object parameter)
+        private bool SpecialEvaluateCanExecute(object parameter)
         {
             if (_vbe.Kind == VBEKind.Standalone)
             {

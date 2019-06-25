@@ -1,5 +1,4 @@
-﻿using System.Resources;
-using Rubberduck.UI.Bars.Framework;
+﻿using Rubberduck.UI.Bars.Framework;
 using Rubberduck.UI.Command;
 using Rubberduck.UI.UnitTesting.Commands;
 

@@ -68,5 +68,14 @@ namespace Rubberduck.Resources.Menus {
                 return ResourceManager.GetString("Command_Refresh_Caption", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rubberduck.
+        /// </summary>
+        public static string MenuBar_Rubberduck_Caption {
+            get {
+                return ResourceManager.GetString("MenuBar_Rubberduck_Caption", resourceCulture);
+            }
+        }
     }
 }

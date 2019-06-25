@@ -6,11 +6,6 @@ namespace Rubberduck.UI.Bars.MenuBars
 {
     public class CodePaneContextMenuBar : MenuBar
     {
-        public CodePaneContextMenuBar()
-            : base("RubberduckMenu")
-        {
-        }
-
         protected override void DoInitialize()
         {
             AddMenuBar<RefactorMenuBar>("RubberduckMenu_Refactor");

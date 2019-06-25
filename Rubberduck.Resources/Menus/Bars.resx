@@ -120,4 +120,7 @@
   <data name="Command_Refresh_Caption" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="MenuBar_Rubberduck_Caption" xml:space="preserve">
+    <value>Rubberduck</value>
+  </data>
 </root>

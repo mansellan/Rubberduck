@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Forms.VisualStyles;
 
 namespace Rubberduck.UI.Bars.Framework
 {
@@ -28,7 +29,7 @@ namespace Rubberduck.UI.Bars.Framework
 
         protected virtual void SetAndNotify<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
         {
-            if (field.Equals(value))
+            if ((field == null && value == null) || (field != null && field.Equals(value)))
             {
                 return;
             }

@@ -6,11 +6,6 @@ namespace Rubberduck.UI.Bars.MenuBars
 {
     public class RefactorMenuBar : MenuBar
     {
-        public RefactorMenuBar(string captionResourceKey)
-            : base(captionResourceKey)
-        {            
-        }
-
         protected override void DoInitialize()
         {
             AddCommand<CodePaneRefactorRenameCommand>("RefactorMenu_Rename");

@@ -16,8 +16,7 @@ namespace Rubberduck.UI.Bars.Framework
 
     public class CommandBarItem : SelectableBarItem, ICommandBarItem
     {
-        public CommandBarItem(ICommand command, string captionKey = null, string toolTipTextKey = null)
-            : base(captionKey ?? $"Command_{GetDefaultKey(command)}_Caption", toolTipTextKey ?? $"Command_{GetDefaultKey(command)}_ToolTipText")
+        protected CommandBarItem(ICommand command)
         {
             Command = command;
         }
@@ -39,8 +38,8 @@ namespace Rubberduck.UI.Bars.Framework
     public class CommandBarItem<TCommand> : CommandBarItem, ICommandBarItem<TCommand>
         where TCommand : ICommand
     {
-        public CommandBarItem(TCommand command, string captionResourceKey = null, string toolTipTextKey = null)
-            : base(command, captionResourceKey, toolTipTextKey)
+        public CommandBarItem(TCommand command)
+            : base(command)
         {
             Command = command;
         }

@@ -81,8 +81,8 @@ namespace Rubberduck.UI.Bars.Framework
                             var button = controls.AddButton();
                             _commandBarItems[commandBarItem] = button;
 
-                            button.Picture = commandBarItem.Image;
-                            button.Mask = commandBarItem.Mask;
+                            button.Picture = commandBarItem.Image.Image;
+                            button.Mask = commandBarItem.Image.Mask;
                             button.ApplyIcon();
 
                             button.BeginsGroup = beginsGroup;

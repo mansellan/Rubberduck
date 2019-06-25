@@ -16,7 +16,7 @@ namespace Rubberduck.UI.Bars.ToolBars
 
         protected override void DoInitialize()
         {
-            Refresh = AddCommand<RefreshCommand>("RubberduckMenu_Refresh"); //, ButtonStyle.IconAndCaption); - TODO - separate factories...
+            Refresh = AddCommand<RefreshCommand>((CommandBarIcons.arrow_circle_double, CommandBarIcons.arrow_circle_double_mask), "Command_Refresh_Caption"); //, ButtonStyle.IconAndCaption); - TODO - separate factories...
         }
 
         protected override void DoEvaluateAvailability(object state)

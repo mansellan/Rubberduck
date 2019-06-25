@@ -24,16 +24,16 @@ namespace Rubberduck.UI.Bars.MenuBars
             AddSeparator();
             UnitTests = AddMenuBar<UnitTestsMenuBar>();
             Indent = AddMenuBar<IndentMenuBar>();
-            Refactor = AddMenuBar<RefactorMenuBar>("RubberduckMenu_Refactor");
-            Navigate = AddMenuBar<NavigateMenuBar>("RubberduckMenu_Navigate");
-            Tools = AddMenuBar<ToolsMenuBar>("ToolsMenu");
-            CodeInspections = AddCommand<InspectionResultsCommand>("RubberduckMenu_CodeInspections");
+            Refactor = AddMenuBar<RefactorMenuBar>();
+            Navigate = AddMenuBar<NavigateMenuBar>();
+            Tools = AddMenuBar<ToolsMenuBar>();
+            CodeInspections = AddCommand<InspectionResultsCommand>();
 
             AddSeparator();
-            Settings = AddCommand<SettingsCommand>("RubberduckMenu_Settings");
+            Settings = AddCommand<SettingsCommand>();
 
             AddSeparator();
-            About = AddCommand<AboutCommand>("RubberduckMenu_About");
+            About = AddCommand<AboutCommand>();
         }
 
         protected override void DoEvaluateAvailability(object state)

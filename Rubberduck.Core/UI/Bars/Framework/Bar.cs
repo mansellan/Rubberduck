@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Input;
 
@@ -16,12 +17,7 @@ namespace Rubberduck.UI.Bars.Framework
         private IBarItemFactory _barItemFactory;
         private readonly IList<IBarItem> _barItems = new List<IBarItem>();
         private readonly IDictionary<IBarItem, BarItemAvailability> _barItemAvailabilities = new Dictionary<IBarItem, BarItemAvailability>();
-        private int _separatorIndex = 1;
-        
-        protected Bar(string captionKey = null, string toolTipTextKey = null)
-            : base(captionKey, toolTipTextKey)
-        {
-        }
+        private int _separatorIndex = 1;       
 
         public void Initialize()
         {
@@ -56,8 +52,30 @@ namespace Rubberduck.UI.Bars.Framework
         protected ICommandBarItem<TCommand> AddCommand<TCommand>(string captionKey = null, string toolTipTextKey = null)
             where TCommand : class, ICommand
         {
-            var commandItem = _barItemFactory.CreateCommandBarItem<TCommand>(captionKey, toolTipTextKey);
+            var commandItem = _barItemFactory.CreateCommandBarItem<TCommand>();
+            commandItem.SetCaption(captionKey);
+            commandItem.SetToolTipText(toolTipTextKey);
             _barItems.Add(commandItem);
+            return commandItem;
+        }
+
+        protected ICommandBarItem<TCommand> AddCommand<TCommand>((Image Image, Image Mask) image, string captionKey = null, string toolTipTextKey = null)
+            where TCommand : class, ICommand
+        {
+            var commandItem = AddCommand<TCommand>();
+            commandItem.SetCaption(captionKey);
+            commandItem.SetToolTipText(toolTipTextKey);
+            commandItem.SetImage(image.Image, image.Mask);
+            return commandItem;
+        }
+
+        protected ICommandBarItem<TCommand> AddCommand<TCommand>((string ImageKey, string MaskKey) imageKeys, string captionKey = null, string toolTipTextKey = null)
+            where TCommand : class, ICommand
+        {
+            var commandItem = AddCommand<TCommand>();
+            commandItem.SetCaption(captionKey);
+            commandItem.SetToolTipText(toolTipTextKey);
+            commandItem.SetImage(imageKeys.ImageKey, imageKeys.MaskKey);
             return commandItem;
         }
 

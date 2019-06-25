@@ -56,8 +56,8 @@ namespace Rubberduck.UI.Bars.Framework
                             var toolBarButton = controls.AddButton();
                             toolBarButton.BeginsGroup = beginsGroup;
                             toolBarButton.Style = ButtonStyle.IconAndCaption; // TODO!!
-                            toolBarButton.Picture = commandBarItem.Image;
-                            toolBarButton.Mask = commandBarItem.Mask;
+                            toolBarButton.Picture = commandBarItem.Image.Image;
+                            toolBarButton.Mask = commandBarItem.Image.Mask;
                             toolBarButton.IsVisible = true; // commandBarItem.Visible;
                             toolBarButton.IsEnabled = true; // commandBarItem.Enabled;
                             toolBarButton.Caption = commandBarItem.Caption;

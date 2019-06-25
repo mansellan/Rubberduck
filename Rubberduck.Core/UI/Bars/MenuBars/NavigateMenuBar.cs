@@ -6,11 +6,6 @@ namespace Rubberduck.UI.Bars.MenuBars
 {
     public class NavigateMenuBar : MenuBar
     {
-        public NavigateMenuBar(string captionResourceKey)
-            : base(captionResourceKey)
-        {            
-        }
-
         protected override void DoInitialize()
         {
             AddCommand<CodeExplorerCommand>("RubberduckMenu_CodeExplorer");

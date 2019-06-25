@@ -34,7 +34,10 @@ namespace Rubberduck.UI.Bars.Framework
         {
             if (_commands.TryGetValue(typeof(TCommand), out var command))
             {
-                return new CommandBarItem<TCommand>(command as TCommand, captionKey, toolTipTextKey);
+                var commandBarItem = new CommandBarItem<TCommand>(command as TCommand);
+                commandBarItem.SetCaption(captionKey);
+                commandBarItem.SetToolTipText(toolTipTextKey);
+                return commandBarItem;
             }
             throw new ApplicationException("TODO");         
         }
